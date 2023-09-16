@@ -10,9 +10,12 @@ using {
 // Entity - Custom ENtity
 
 entity Assessments : cuid {
-    Agenda    : String(50)  @mandatory  @Core.Immutable;
-    StartDate : Date        @mandatory;
-    EndDate   : Date        @mandatory;
-    DueDate   : Date        @mandatory;
-
+    Agenda      : String(50)  @mandatory  @Core.Immutable;
+    StartDate   : Date        @mandatory;
+    EndDate     : Date        @mandatory;
+    DueDate     : Date        @mandatory;
+    DaysPlanned : Integer     @assert.range: [
+        7,
+        21
+    ];
 }

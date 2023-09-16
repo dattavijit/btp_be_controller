@@ -53,7 +53,11 @@ annotate ControllerService.Assessments with @(UI: {
             {
                 $Type: 'UI.DataField',
                 Value: DueDate
-            }
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: DaysPlanned,
+            },
         ],
     },
     Facets               : [{
@@ -62,8 +66,9 @@ annotate ControllerService.Assessments with @(UI: {
         Label : 'Basic Data'
     }, ],
 }) {
-    Agenda    @title: 'Agenda';
-    StartDate @title: 'Start Date';
-    EndDate   @title: 'End Date';
-    DueDate   @title: 'Due Date';
+    Agenda      @title: 'Agenda';
+    StartDate   @title: 'Start Date';
+    EndDate     @title: 'End Date';
+    DueDate     @title: 'Due Date';
+    DaysPlanned @title: '{i18n>DaysPlanned}';
 };
