@@ -1,6 +1,20 @@
-const cds = require('@sap/cds');
+const cds = require("@sap/cds");
 
+module.exports = cds.service.impl(srv => {
 
-module.exports = cds.service.impl( srv => {
-  srv.before('')
+  srv.before('READ', 'Assessments', (req) => {
+    console.log('Before')
+  })
+
+  srv.after('READ', 'Assessments', (results) => {
+    console.log('After')
+  })
+
+  srv.on('READ', 'Assessments', (req) => {
+    console.log('On')
+  })
+
 })
+
+
+
