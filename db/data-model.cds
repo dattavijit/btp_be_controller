@@ -10,8 +10,9 @@ using {
 // Entity - Custom ENtity
 
 entity Assessments : cuid {
-    Agenda    : String(50);
-    StartDate : Date;
-    EndDate   : Date;
-    DueDate   : Date;
+    Agenda    : String(50)  @mandatory  @Core.Immutable;
+    StartDate : Date        @mandatory;
+    EndDate   : Date        @mandatory;
+    DueDate   : Date        @mandatory;
+
 }
