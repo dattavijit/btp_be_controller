@@ -38,6 +38,9 @@ module.exports = cds.service.impl(srv => {
     }
   })
 
+  srv.on('READ', 'AssessmentsView', (req) =>{
+    return [];
+  })
 })
 
 
