@@ -38,26 +38,49 @@ module.exports = cds.service.impl(srv => {
     }
   })
 
-  srv.on('READ', 'AssessmentsView', (req) =>{
-    return [];
+  srv.on('READ', 'AssessmentsView', async (req) => {
+    const { Assessments } = cds.entities('btp.conroller');
+
+    const tx = cds.transaction(req);
+
+    let aAssessments = await tx.run(
+      SELECT.from(Assessments));
+
+    var aOutputData = [], sAgendaIndex = 0;
+
+    aAssessments.forEach(lv_assessment => {
+      sAgendaIndex++;
+      aOutputData.push({
+        "AgendaIndex": sAgendaIndex,
+        "ID": lv_assessment.ID,
+        "Agenda": lv_assessment.Agenda,
+        "StartDate": lv_assessment.StartDate,
+        "EndDate": lv_assessment.EndDate,
+        "DueDate": lv_assessment.DueDate,
+        "DaysPlanned": lv_assessment.DaysPlanned
+
+      })
+    });
+    return aOutputData;
+    console.log(aOutputData);
   })
-})
 
 
-//Create a function to calculate the status of the assessment
-function _CalculateStatus(assessment) {
-  if (!assessment.StartDate || !assessment.EndDate || !assessment.DueDate) {
-    return { "OverallStatus": 'Not Started', "OverallStatusCriticality": 0 };
-  } else {
+  //Create a function to calculate the status of the assessment
+  function _CalculateStatus(assessment) {
+    if (!assessment.StartDate || !assessment.EndDate || !assessment.DueDate) {
+      return { "OverallStatus": 'Not Started', "OverallStatusCriticality": 0 };
+    } else {
 
-    let lv_today = new Date();
-    lv_today.setHours(0, 0, 0, 0);
+      let lv_today = new Date();
+      lv_today.setHours(0, 0, 0, 0);
 
-    let lv_due_date = new Date(assessment.DueDate);
-    lv_due_date.setHours(0, 0, 0, 0);
+      let lv_due_date = new Date(assessment.DueDate);
+      lv_due_date.setHours(0, 0, 0, 0);
 
-    return (lv_due_date < lv_today) ? { "OverallStatus": 'Overdue', "OverallStatusCriticality": 1 } :
-      { "OverallStatus": 'On Track', "OverallStatusCriticality": 3 }
+      return (lv_due_date < lv_today) ? { "OverallStatus": 'Overdue', "OverallStatusCriticality": 1 } :
+        { "OverallStatus": 'On Track', "OverallStatusCriticality": 3 }
 
+    }
   }
-}
+});
