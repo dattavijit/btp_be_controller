@@ -17,15 +17,44 @@ module.exports = cds.service.impl(srv => {
 
   })
 
-  //srv.after('READ', 'Assessments', (results) => {
-  //  console.log('After')
-  // })
 
-  //srv.on('READ', 'Assessments', (req) => {
-  //  console.log('On')
-  //})
+  srv.before('READ', 'Assessments', (req) => {
+    console.log('Before Read');
+  })
+
+  srv.on('READ', 'Assessments', (req, next) => {
+    return next();
+  })
+
+  srv.after('READ', 'Assessments', (data, req) => {
+    console.log('After Read');
+    //if results is not empty, add a new property to each result
+    if (typeof data.length !== 'undefined' && data.length > 0) {
+      data.forEach(item => {
+        let ls_status_info = _CalculateStatus(item);
+        item.OverallStatus = ls_status_info.OverallStatus;
+        item.OverallStatusCriticality = ls_status_info.OverallStatusCriticality;
+      });
+    }
+  })
 
 })
 
 
+//Create a function to calculate the status of the assessment
+function _CalculateStatus(assessment) {
+  if (!assessment.StartDate || !assessment.EndDate || !assessment.DueDate) {
+    return { "OverallStatus": 'Not Started', "OverallStatusCriticality": 0 };
+  } else {
 
+    let lv_today = new Date();
+    lv_today.setHours(0, 0, 0, 0);
+
+    let lv_due_date = new Date(assessment.DueDate);
+    lv_due_date.setHours(0, 0, 0, 0);
+
+    return (lv_due_date < lv_today) ? { "OverallStatus": 'Overdue', "OverallStatusCriticality": 1 } :
+      { "OverallStatus": 'On Track', "OverallStatusCriticality": 3 }
+
+  }
+}

@@ -3,15 +3,13 @@ using btp.conroller as b from '../db/data-model';
 // annotation to define the service implementation
 service ControllerService @(impl: './controller.js') {
     @odata.draft.enabled
-    entity Assessments as select from b.Assessments;
+    entity Assessments     as select from b.Assessments;
+
+    // Create a readonly service for the entity b.V_ASSESSMENTS
+    @readonly
+    entity AssessmentsView as select from b.V_ASSESSMENTS;
 
 }
-
-// annotation for UI
-//Agenda    : String(50);
-//StartDate : Date;
-//EndDate   : Date;
-//DueDate   : Date;
 
 annotate ControllerService.Assessments with @(UI: {
 
@@ -32,6 +30,15 @@ annotate ControllerService.Assessments with @(UI: {
         {
             $Type: 'UI.DataField',
             Value: DueDate
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: DaysPlanned
+        },
+        {
+            $Type      : 'UI.DataField',
+            Value      : OverallStatus,
+            Criticality: OverallStatusCriticality
         }
     ],
     FieldGroup #BasicData: {
@@ -55,8 +62,9 @@ annotate ControllerService.Assessments with @(UI: {
                 Value: DueDate
             },
             {
-                $Type: 'UI.DataField',
-                Value: DaysPlanned,
+                $Type      : 'UI.DataField',
+                Value      : OverallStatus,
+                Criticality: OverallStatusCriticality
             },
         ],
     },
@@ -66,9 +74,10 @@ annotate ControllerService.Assessments with @(UI: {
         Label : 'Basic Data'
     }, ],
 }) {
-    Agenda      @title: 'Agenda';
-    StartDate   @title: 'Start Date';
-    EndDate     @title: 'End Date';
-    DueDate     @title: 'Due Date';
-    DaysPlanned @title: '{i18n>DaysPlanned}';
+    Agenda        @title: 'Agenda';
+    StartDate     @title: 'Start Date';
+    EndDate       @title: 'End Date';
+    DueDate       @title: 'Due Date';
+    DaysPlanned   @title: '{i18n>DaysPlanned}';
+    OverallStatus @title: 'Overall Status';
 };
