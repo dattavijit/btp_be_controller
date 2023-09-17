@@ -32,3 +32,15 @@ entity V_ASSESSMENTS : cuid {
     DueDate     : Date;
     DaysPlanned : Integer;
 }
+
+
+// Media entity
+entity MediaFile : cuid {
+    @Core: {MediaType: mediaType}
+    content   : LargeBinary;
+
+    @Core: {IsMediaType: true}
+    mediaType : String(100);
+
+    fileName  : String(100);
+}

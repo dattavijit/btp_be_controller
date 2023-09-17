@@ -5,9 +5,10 @@ service ControllerService @(impl: './controller.js') {
     @odata.draft.enabled
     entity Assessments     as select from b.Assessments;
 
-    // Create a readonly service for the entity b.V_ASSESSMENTS
     @readonly
     entity AssessmentsView as select from b.V_ASSESSMENTS;
+
+    entity MediaFile       as select from b.MediaFile;
 
 }
 
