@@ -24,3 +24,10 @@ Content-Type: application/pdf
 
 ###
 http://localhost:4004/odata/v4/controller/MediaFile(1ea06494-f2d9-46b0-804e-b14412daefb5)/$value
+
+### Upload File with Slug
+POST http://localhost:4004/v2/odata/v4/controller/MediaFile
+slug: test1.pdf
+Content-Type: application/pdf   
+
+< ../test.pdf

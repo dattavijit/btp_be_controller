@@ -36,11 +36,12 @@ entity V_ASSESSMENTS : cuid {
 
 // Media entity
 entity MediaFile : cuid {
-    @Core: {MediaType: mediaType}
+    @Core                   : {MediaType: mediaType}
     content   : LargeBinary;
 
-    @Core: {IsMediaType: true}
+    @Core                   : {IsMediaType: true}
     mediaType : String(100);
 
+    @Core.ContentDisposition: {Filename: fileName}
     fileName  : String(100);
 }
