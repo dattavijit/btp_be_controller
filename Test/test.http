@@ -1,0 +1,26 @@
+### Get Metadata
+GET http://localhost:4004/odata/v4/controller/$metadata
+
+### Get All Attachments
+GET http://localhost:4004/odata/v4/controller/MediaFile
+
+### Upload Attachment
+POST http://localhost:4004/odata/v4/controller/MediaFile
+Content-Type: application/json
+
+{
+    "mediaType" : "pdf",
+    "fileName"  : "test.pdf"
+}
+
+### Upload File 354e3012-4fe3-440e-b8dc-4d8ad36a93ad
+GET http://localhost:4004/odata/v4/controller/MediaFile(1ea06494-f2d9-46b0-804e-b14412daefb5)
+
+### Put the content in 354e3012-4fe3-440e-b8dc-4d8ad36a93ad 
+PUT http://localhost:4004/odata/v4/controller/MediaFile(1ea06494-f2d9-46b0-804e-b14412daefb5)/content
+Content-Type: application/pdf   
+
+< ../srv/test.pdf
+
+###
+http://localhost:4004/odata/v4/controller/MediaFile(1ea06494-f2d9-46b0-804e-b14412daefb5)/$value
