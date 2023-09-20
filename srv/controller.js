@@ -1,6 +1,10 @@
 const cds = require("@sap/cds");
+const actionHandlers = require("./actionHandlers");
 
 module.exports = cds.service.impl(srv => {
+
+  srv.on('MarkAsObsolete', actionHandlers.MarkAsObsolete); 
+
 
   srv.before('CREATE', 'Assessments', (req) => {
     console.log('Before Create');
