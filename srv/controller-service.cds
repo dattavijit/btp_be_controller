@@ -3,7 +3,9 @@ using btp.conroller as b from '../db/data-model';
 // annotation to define the service implementation
 service ControllerService @(impl: './controller.js') {
     @odata.draft.enabled
-    entity Assessments     as select from b.Assessments;
+    entity Assessments     as select from b.Assessments actions {
+                                  action MarkAsObsolete(reason : String(50));
+                              };
 
     @readonly
     entity AssessmentsView as select from b.V_ASSESSMENTS;
@@ -40,7 +42,16 @@ annotate ControllerService.Assessments with @(UI: {
             $Type      : 'UI.DataField',
             Value      : OverallStatus,
             Criticality: OverallStatusCriticality
-        }
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: IsObsolete
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action: 'ControllerService.MarkAsObsolete',
+            Label : 'Mark as Obsolete'
+        },
     ],
     FieldGroup #BasicData: {
         $Type: 'UI.FieldGroupType',
@@ -81,4 +92,5 @@ annotate ControllerService.Assessments with @(UI: {
     DueDate       @title: 'Due Date';
     DaysPlanned   @title: '{i18n>DaysPlanned}';
     OverallStatus @title: 'Overall Status';
+    IsObsolete    @title: 'Is Obsolete';
 };

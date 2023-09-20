@@ -21,6 +21,7 @@ entity Assessments : cuid {
 
     virtual OverallStatus            : String(50);
     virtual OverallStatusCriticality : Integer;
+    IsObsolete                       : Boolean;
 }
 
 @cds.persistence.skip
@@ -31,6 +32,8 @@ entity V_ASSESSMENTS : cuid {
     EndDate     : Date;
     DueDate     : Date;
     DaysPlanned : Integer;
+
+
 }
 
 
