@@ -22,6 +22,7 @@ entity Assessments : cuid {
     virtual OverallStatus            : String(50);
     virtual OverallStatusCriticality : Integer;
     IsObsolete                       : Boolean;
+    reasonForObsolete                : String(50);
 }
 
 @cds.persistence.skip
