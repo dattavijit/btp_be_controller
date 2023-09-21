@@ -1,6 +1,6 @@
 module.exports.MarkAsObsolete = async function(req) {
     let sReasonComment = req.data.reason;
-    let sAssessmentID = req.params[0];
+    const sAssessmentID = req.params[0].ID;
 
     const { Assessments } = cds.entities('btp.conroller');
     const tx = cds.transaction(req);
